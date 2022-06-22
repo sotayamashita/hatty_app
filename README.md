@@ -1,18 +1,17 @@
 # hatty_app
 
-
-
-```
-$ git clone 
+```bash
+$ git clone git@github.com:sotayamashita/hatty_app.git
+$ cd hatty_app
 
 $ flutter clean
 $ flutter pub get
 $ flutter pub run flutter_native_splash:create
 ```
 
+### iOS
 
-```
-# iOS
+```bash
 $ flutter devices
 N connected devices:
 
@@ -21,8 +20,9 @@ iPhone (mobile) • <UDID>
 $ flutter run -d <UDID>
 ```
 
+### troubleshooting
 
-```
+```bash
 $ flutter run -d <UDID>
 Error: To set up CocoaPods for ARM macOS, run:
   arch -x86_64 sudo gem install ffi
