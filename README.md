@@ -28,5 +28,8 @@ Error: To set up CocoaPods for ARM macOS, run:
   arch -x86_64 sudo gem install ffi
 
 # solution
+# open Terminal using Rosetta
+$ sudo gem uninstall cocoapod
+$ sudo gem install cocoapod
 $ sudo arch -x86_64 gem install ffi
 ```
