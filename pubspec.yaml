@@ -30,6 +30,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # slpash screen
+  flutter_native_splash: ^2.2.3+1
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -87,3 +90,39 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+# Splash screen
+#
+# - image background should be transparent
+# - image size should be 768px
+# - image file extension should be png
+#
+# ┌───────────────┐
+# │ color         │
+# |               │
+# │ ┌───────────┐ │
+# │ │           │ │ 
+# │ │ icon      │ │ 
+# │ │           │ │
+# │ └───────────┘ │
+# │               │
+# └───────────────┘
+# See: https://pub.dev/packages/flutter_native_splash
+flutter_native_splash:
+  color: '#FFFFFF'
+  image: 'assets/images/hatty_star.png'
+  color_dark: '#FFFFFF'
+  image_dark: 'assets/images/hatty_star.png'
+  fullscreen: true
+  android_12:
+    icon_background_color: '#FFFFFF'
+    image: 'assets/images/hatty_star.png'
+    icon_background_color_dark: '#FFFFFF'
+    image_dark: 'assets/images/hatty_star.png'
+
+
+  # Parameters can be used to disable generating a splash screen on a given platform.
+  android: true
+  ios: true
+  web: false

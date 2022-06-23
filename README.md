@@ -1,16 +1,35 @@
 # hatty_app
 
-A new Flutter project.
+```bash
+$ git clone git@github.com:sotayamashita/hatty_app.git
+$ cd hatty_app
 
-## Getting Started
+$ flutter clean
+$ flutter pub get
+$ flutter pub run flutter_native_splash:create
+```
 
-This project is a starting point for a Flutter application.
+### iOS
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+$ flutter devices
+N connected devices:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+iPhone (mobile) • <UDID>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+$ flutter run -d <UDID>
+```
+
+### troubleshooting
+
+```bash
+$ flutter run -d <UDID>
+Error: To set up CocoaPods for ARM macOS, run:
+  arch -x86_64 sudo gem install ffi
+
+# solution
+# open Terminal using Rosetta
+$ sudo gem uninstall cocoapod
+$ sudo gem install cocoapod
+$ sudo arch -x86_64 gem install ffi
+```
