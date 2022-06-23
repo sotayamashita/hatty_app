@@ -48,6 +48,7 @@ jobs:
 
       - run: flutter build web
 
+      # Deploy ./build/web directory to the remote `gh-pages` branch
       - name: Deploy to GitHub Page
         uses: peaceiris/actions-gh-pages@v3
         with:
