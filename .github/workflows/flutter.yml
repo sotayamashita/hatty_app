@@ -46,7 +46,9 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - run: flutter build web
+      - run: |
+        readonly REPOSITORY=$(echo ${{ github.repository }} | sed -e "s#.*/##")
+        flutter build web --base-href /${REPOSITORY}/
 
       # Deploy ./build/web directory to the remote `gh-pages` branch
       - name: Deploy to GitHub Page
