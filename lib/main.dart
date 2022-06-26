@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-final Uri _faqUrl = Uri.parse(
-    'https://autify.com/news/hi-hatty#:~:text=from%20the%20Hive!-,FAQ,-Q.%20Where');
+final Uri _faqUrl = Uri.parse('https://autify.com/news/hi-hatty');
 final Uri _codeUrl = Uri.parse('https://github.com/sotayamashita/hatty_app');
 
 class Hatty {
@@ -39,18 +39,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.amber,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Hatty Hive'),
     );
   }
 }
@@ -82,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       final List<dynamic> hattyList = jsonDecode(response.body);
       setState(() {
         _hattyList = hattyList.map((hatty) => Hatty.fromJson(hatty)).toList();
+        _hattyList.shuffle();
       });
     } else {
       // If the server did not return a 200 OK response,
@@ -168,7 +160,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         appBar: AppBar(
-          title: Text(widget.title),
+          centerTitle: true,
+          title: Text(widget.title, style: GoogleFonts.roboto()),
         ),
         body: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
