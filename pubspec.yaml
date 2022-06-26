@@ -32,9 +32,14 @@ dependencies:
 
   http: 0.13.4
 
-  # slpash screen
+  # Configure slpash screen
   flutter_native_splash: ^2.2.3+1
 
+  # Launching a URL.
+  url_launcher: ^6.1.4
+
+  # Access pubspec info from app
+  package_info_plus: ^1.4.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

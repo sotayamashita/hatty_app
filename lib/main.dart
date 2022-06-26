@@ -3,6 +3,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+final Uri _faqUrl = Uri.parse(
+    'https://autify.com/news/hi-hatty#:~:text=from%20the%20Hive!-,FAQ,-Q.%20Where');
+final Uri _codeUrl = Uri.parse('https://github.com/sotayamashita/hatty_app');
 
 class Hatty {
   final String url;
@@ -69,7 +75,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Hatty> _hattyList = [];
-  void fetchHatty() async {
+  void _initHattyData() async {
     final response = await http
         .get(Uri.parse("https://sotayamashita.github.io/hatty_api/index.json"));
     if (response.statusCode == 200) {
@@ -84,36 +90,94 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+  );
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    initialization();
-  }
-
-  void initialization() async {
-    fetchHatty();
+    _initPackageInfo();
+    _initHattyData();
     if (!kIsWeb) {
       FlutterNativeSplash.remove();
     }
   }
 
+  void _launchUrl(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final TextStyle textStyle = theme.textTheme.bodyText2!;
+    final List<Widget> aboutBoxChildren = <Widget>[
+      const SizedBox(height: 24),
+      RichText(
+          text: TextSpan(children: <TextSpan>[
+        TextSpan(
+          style: textStyle,
+          text: "hogehoge",
+        )
+      ]))
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: ListView.builder(
-              // Let ListView how many item or raise "Index out of range" exception
-              itemCount: _hattyList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(title: Image.network(_hattyList[index].url));
-              })),
-    );
+        // TODO: Externalize
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.hive),
+                title: const Text("Hive"),
+                onTap: () => Navigator.pop(context),
+              ),
+              ListTile(
+                  leading: const Icon(Icons.question_mark),
+                  title: const Text('FAQ'),
+                  onTap: () => _launchUrl(_faqUrl)),
+              ListTile(
+                  leading: const Icon(Icons.code),
+                  title: const Text('Code'),
+                  onTap: () => _launchUrl(_codeUrl)),
+              AboutListTile(
+                icon: const Icon(Icons.info),
+                applicationIcon: const FlutterLogo(),
+                applicationName: _packageInfo.appName,
+                applicationVersion: _packageInfo.version,
+                applicationLegalese: '\u{a9} 2021 <TBD>',
+                aboutBoxChildren: aboutBoxChildren,
+              )
+            ],
+          ),
+        ),
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 4,
+              crossAxisSpacing: 4,
+            ),
+            itemCount: _hattyList.length,
+            itemBuilder: (BuildContext context, int index) =>
+                Image.network(_hattyList[index].url)));
   }
 }
